@@ -1,0 +1,8 @@
+services:
+  lambda:
+    build:
+      context: .
+      dockerfile: internal/lambda/dev/lambda.Dockerfile
+    image: terraform-lambda-tutorial
+    ports:
+      - "8080:8080"
