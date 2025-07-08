@@ -8,7 +8,7 @@ This project uses Terraform to deploy a simple AWS Lambda function, triggered by
 
 The diagram below shows the overall architecture:
 
-<ADD_IMAGE_HERE>
+![terraform-tutorial](https://github.com/user-attachments/assets/5d551283-dcd1-428e-a5e4-9aa7911499e7)
 
 ## 🔨 Lambda Development
 
