@@ -9,13 +9,16 @@ ACCOUNT_ID := $(shell aws sts get-caller-identity --query Account --output text)
 ECR_URL    := $(ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/$(ECR_NAME)
 FULL_IMAGE := $(ECR_URL):$(VERSION)
 
-# Builds Docker image and pushes it to ECR
+## Builds Docker image and pushes it to ECR
+# Example: make docker-lambda-image-push
 docker-lambda-image-push:
 	aws ecr get-login-password | docker login --username AWS --password-stdin $(ECR_URL)
 	docker build -t $(FULL_IMAGE) -f $(DOCKERFILE) .
 	docker push $(FULL_IMAGE)
 
 # [ 🧱 TERRAFORM - DEPLOY ECR / LAMBDA ]
+# SERVICES: [ ecr, lambda ]
+
 TERRAFORM_BASE_PATH = infra/lambda/terraform
 SERVICE = "ecr" # SERVICE TO DEPLOY (e.g. ecr, lambda)
 TERRAFORM_FULL_PATH = $(TERRAFORM_BASE_PATH)/$(SERVICE)
@@ -39,44 +42,4 @@ terraform-apply:
 # Example: make terraform-destroy SERVICE=ecr
 terraform-destroy:
 	terraform -chdir=$(TERRAFORM_FULL_PATH) destroy
-
-
-# # [ 🧱 TERRAFORM - ECR ]
-# PATH_TO_TERRAFORM_ECR_TEMPLATE = "infra/lambda/terraform/ecr"
-
-# # Initializes Terraform
-# terraform-ecr-init: 
-# 	terraform -chdir=$(PATH_TO_TERRAFORM_ECR_TEMPLATE) init
-
-# # Lints Terraform
-# terraform-ecr-validate: 
-# 	terraform -chdir=$(PATH_TO_TERRAFORM_ECR_TEMPLATE) validate
-
-# # Applies Terraform to create ECR repository
-# terraform-ecr-apply: 
-# 	terraform -chdir=$(PATH_TO_TERRAFORM_ECR_TEMPLATE) apply
-
-# # Destroys ECR repository
-# terraform-ecr-destroy:
-# 	terraform -chdir=$(PATH_TO_TERRAFORM_ECR_TEMPLATE) destroy
-
-# # [ 🧱 TERRAFORM - LAMBDA ]
-# PATH_TO_TERRAFORM_LAMBDA_TEMPLATE = "infra/lambda/terraform/lambda"
-
-# # Initializes Terraform
-# terraform-lambda-init: 
-# 	terraform -chdir=$(PATH_TO_TERRAFORM_LAMBDA_TEMPLATE) init
-
-# # Validates Terraform template
-# terraform-lambda-validate: 
-# 	terraform -chdir=$(PATH_TO_TERRAFORM_LAMBDA_TEMPLATE) validate
-
-# # Applies Terraform to create Lambda & API Gateway
-# terraform-lambda-apply: 
-# 	terraform -chdir=$(PATH_TO_TERRAFORM_LAMBDA_TEMPLATE) apply
-
-# # Destroys Lambda & API Gateway
-# terraform-lambda-destroy:
-# 	terraform -chdir=$(PATH_TO_TERRAFORM_LAMBDA_TEMPLATE) destroy
-
 

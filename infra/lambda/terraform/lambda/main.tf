@@ -50,7 +50,7 @@ resource "aws_apigatewayv2_api" "lambda_api" {
   protocol_type = "HTTP"
 }
 
-# INTEGRATION (API → LAMBDA)
+// INTEGRATION (API → LAMBDA)
 resource "aws_apigatewayv2_integration" "lambda_integration" {
   api_id                 = aws_apigatewayv2_api.lambda_api.id
   integration_type       = "AWS_PROXY"
@@ -58,14 +58,14 @@ resource "aws_apigatewayv2_integration" "lambda_integration" {
   payload_format_version = "2.0"
 }
 
-# DEFAULT ROUTE
+// ROUTE ( POST /greetings )
 resource "aws_apigatewayv2_route" "default_route" {
   api_id    = aws_apigatewayv2_api.lambda_api.id
   route_key = "POST /greetings"
   target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
 }
 
-# STAGE (AUTO‑DEPLOY)
+// STAGE
 resource "aws_apigatewayv2_stage" "live" {
   api_id      = aws_apigatewayv2_api.lambda_api.id
   name        = "$default"
@@ -73,7 +73,7 @@ resource "aws_apigatewayv2_stage" "live" {
 }
 
 
-# PERMISSION (API → LAMBDA)
+// LAMBDA PERMISSION (API → LAMBDA)
 resource "aws_lambda_permission" "allow_apigw" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
