@@ -2,6 +2,8 @@
 
 This repository contains Terraform code to deploy a Golang AWS Lambda function, triggered by API Gateway. The Lambda is packaged as a Docker image and stored in AWS Elastic Container Registry (ECR). You can also test the Lambda locally using the AWS Lambda Runtime Emulator, allowing HTTP-based invocation during development.
 
+✏ For more information, check out the [blog post](https://medium.com/@george.benjamin.lopez/building-testing-deploying-aws-lambda-with-terraform-1699e8d3cd9a).
+
 ## 🧬 Architecture
 
 This project uses Terraform to deploy a simple AWS Lambda function, triggered by an HTTP POST request to the `/greetings` endpoint via API Gateway. The request body should include a `name` (e.g., `{ "name": "George" }`), and the Lambda will respond with a personalized greeting.
