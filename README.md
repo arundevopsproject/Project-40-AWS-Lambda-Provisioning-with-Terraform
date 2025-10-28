@@ -1,4 +1,4 @@
-# 📦 Terraform-AWS-Lambda Tutorial
+# 📦 Project-40-Terraform-AWS-Lambda Provisioning
 
 This repository contains Terraform code to deploy a Golang AWS Lambda function, triggered by API Gateway. The Lambda is packaged as a Docker image and stored in AWS Elastic Container Registry (ECR). You can also test the Lambda locally using the AWS Lambda Runtime Emulator, allowing HTTP-based invocation during development.
 
