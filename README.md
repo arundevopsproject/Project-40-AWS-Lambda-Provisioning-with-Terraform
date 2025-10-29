@@ -1,4 +1,4 @@
-# 📦 Project-40-Terraform-AWS-Lambda Provisioning
+# 📦 Project-40-Terraform-AWS-Lambda-Provisioning
 
 https://medium.com/@george.benjamin.lopez/building-testing-deploying-aws-lambda-with-terraform-1699e8d3cd9a
 
